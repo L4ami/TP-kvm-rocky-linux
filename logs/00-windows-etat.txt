@@ -1,0 +1,36 @@
+﻿=== bcdedit /enum {current} ===
+Le type d’entrée spécifié n’est pas valide.
+Exécutez « bcdedit /? » pour obtenir de l’aide sur la ligne de commande.
+Paramètre incorrect.
+
+=== DeviceGuard ===
+
+
+EnableVirtualizationBasedSecurity : 1
+
+
+
+
+=== WindowsHello scenario ===
+
+
+Enabled : 1
+
+
+
+
+=== HVCI (Integrite de la memoire) ===
+
+
+Enabled : 1
+
+
+
+
+VBS status: 2 ; SecurityServicesRunning: 2 ; Configured: 2
+HypervisorPresent: True
+=== BitLocker C: ===
+Get-BitLockerVolume erreur: Accès refusé 
+
+=== Note ===
+Session non administrateur : bcdedit /enum {current} et Get-BitLockerVolume / manage-bde -status C: refusent l'acces (droits admin requis). Non verifie, a faire par Lami dans un PowerShell administrateur.

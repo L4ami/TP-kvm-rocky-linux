@@ -1,0 +1,18 @@
+﻿# Fichiers avec le hash du mot de passe : ne jamais publier
+config/ks.cfg
+config/oemdrv/
+
+# Gros fichiers et fichiers de VM
+*.iso
+*.vmdk
+*.vmem
+*.nvram
+*.lck/
+
+# Cles SSH privees (au cas ou)
+*_key
+id_*
+!*.pub
+
+# Fichiers temporaires
+captures/_*

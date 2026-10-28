@@ -1,0 +1,45 @@
+[lami@kvm-rocky ~]$ virsh list --all
+ ID   Nom           État
+------------------------------------------
+ 1    cirros-test   en cours d’exécution
+
+[lami@kvm-rocky ~]$ virsh dominfo cirros-test
+ID :           1
+Nom :          cirros-test
+UUID :         7b0554e6-59e3-4dce-9388-af3676ba4406
+Type de SE :   hvm
+État :        en cours d’exécution
+CPU :          1
+Temps CPU :    6,6s
+Mémoire Max : 262144 KiB
+Mémoire utilisée : 262144 KiB
+Persistant :    oui
+Démarrage automatique : désactiver
+Autostart Once: désactiver
+Sauvegarde gérée : non
+Modèle de sécurité : selinux
+Sécurité DOI : 0
+Étiquette de sécurité : system_u:system_r:svirt_tcg_t:s0:c498,c603 (enforcing)
+Messages :      entaché : utilisation de paramètres de configuration obsolètes
+                configuration obsolète : type de machine 'pc-i440fx-rhel7.6.0'
+
+[lami@kvm-rocky ~]$ virsh domifaddr cirros-test
+ Nom        adresse MAC          Protocole     Adresse
+-------------------------------------------------------------------------------
+ vnet0      52:54:00:19:62:2c    ipv4         192.168.122.105/24
+
+[lami@kvm-rocky ~]$ virsh net-dhcp-leases default
+ Heure d'expiration    adresse MAC         Protocole   Adresse IP           Nom d’hôte   ID client ou DUID
+---------------------------------------------------------------------------------------------------------------
+ 2026-10-28 18:33:56   52:54:00:19:62:2c   ipv4        192.168.122.105/24   -            01:52:54:00:19:62:2c
+
+[lami@kvm-rocky ~]$ ping -c 4 192.168.122.105
+PING 192.168.122.105 (192.168.122.105) 56(84) octets de données.
+64 octets de 192.168.122.105 : icmp_seq=1 ttl=64 temps=1.80 ms
+64 octets de 192.168.122.105 : icmp_seq=2 ttl=64 temps=1.28 ms
+64 octets de 192.168.122.105 : icmp_seq=3 ttl=64 temps=0.893 ms
+64 octets de 192.168.122.105 : icmp_seq=4 ttl=64 temps=0.528 ms
+
+--- statistiques ping 192.168.122.105 ---
+4 paquets transmis, 4 reçus, 0% packet loss, time 3025ms
+rtt min/avg/max/mdev = 0.528/1.126/1.802/0.472 ms

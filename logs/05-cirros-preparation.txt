@@ -1,0 +1,36 @@
+[lami@kvm-rocky ~]$ osinfo-query os | grep -i cirros
+
+ cirros0.3.0          | CirrOS 0.3.0                                       | 0.3.0    | http://cirros-cloud.net/cirros/0.3.0    
+ cirros0.3.1          | CirrOS 0.3.1                                       | 0.3.1    | http://cirros-cloud.net/cirros/0.3.1    
+ cirros0.3.2          | CirrOS 0.3.2                                       | 0.3.2    | http://cirros-cloud.net/cirros/0.3.2    
+ cirros0.3.3          | CirrOS 0.3.3                                       | 0.3.3    | http://cirros-cloud.net/cirros/0.3.3    
+ cirros0.3.4          | CirrOS 0.3.4                                       | 0.3.4    | http://cirros-cloud.net/cirros/0.3.4    
+ cirros0.3.5          | CirrOS 0.3.5                                       | 0.3.5    | http://cirros-cloud.net/cirros/0.3.5    
+ cirros0.4.0          | CirrOS 0.4.0                                       | 0.4.0    | http://cirros-cloud.net/cirros/0.4.0    
+ cirros0.5.0          | CirrOS 0.5.0                                       | 0.5.0    | http://cirros-cloud.net/cirros/0.5.0    
+ cirros0.5.1          | CirrOS 0.5.1                                       | 0.5.1    | http://cirros-cloud.net/cirros/0.5.1    
+ cirros0.5.2          | CirrOS 0.5.2                                       | 0.5.2    | http://cirros-cloud.net/cirros/0.5.2    
+
+[lami@kvm-rocky ~]$ sudo curl -L -o /var/lib/libvirt/images/cirros-0.6.3-x86_64-disk.img https://download.cirros-cloud.net/0.6.3/cirros-0.6.3-x86_64-disk.img
+[lami@kvm-rocky ~]$ sudo qemu-img info /var/lib/libvirt/images/cirros-0.6.3-x86_64-disk.img
+image: /var/lib/libvirt/images/cirros-0.6.3-x86_64-disk.img
+file format: qcow2
+virtual size: 112 MiB (117440512 bytes)
+disk size: 20.7 MiB
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    compression type: zlib
+    lazy refcounts: false
+    refcount bits: 16
+    corrupt: false
+    extended l2: false
+Child node '/file':
+    filename: /var/lib/libvirt/images/cirros-0.6.3-x86_64-disk.img
+    protocol type: file
+    file length: 20.7 MiB (21692416 bytes)
+    disk size: 20.7 MiB
+
+[lami@kvm-rocky ~]$ curl -sL https://download.cirros-cloud.net/0.6.3/MD5SUMS | grep x86_64-disk.img ; sudo md5sum /var/lib/libvirt/images/cirros-0.6.3-x86_64-disk.img
+87617e24a5e30cb3b87fda8c0764838f  cirros-0.6.3-x86_64-disk.img
+87617e24a5e30cb3b87fda8c0764838f  /var/lib/libvirt/images/cirros-0.6.3-x86_64-disk.img

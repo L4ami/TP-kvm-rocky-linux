@@ -1,0 +1,8 @@
+﻿PS> & "C:\Program Files (x86)\VMware\VMware Workstation\vmrun.exe" -T ws getGuestIPAddress D:\VMs\kvm-rocky\kvm-rocky.vmx
+192.168.190.145
+
+PS> ssh -i $env:USERPROFILE\.ssh\kvm_rocky_key lami@192.168.190.145 "hostname; whoami; id; ip -4 -br addr show ens160"
+kvm-rocky
+lami
+uid=1000(lami) gid=1000(lami) groupes=1000(lami),10(wheel),997(libvirt) contexte=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+ens160           UP             192.168.190.145/24 

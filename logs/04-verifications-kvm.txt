@@ -1,0 +1,103 @@
+[lami@kvm-rocky ~]$ cat /etc/rocky-release
+Rocky Linux release 9.8 (Blue Onyx)
+
+[lami@kvm-rocky ~]$ dnf group list --installed
+Dernière vérification de l’expiration des métadonnées effectuée il y a 0:03:24 le mer. 28 oct. 2026 17:29:59.
+Groupes d’environnements installés :
+   Hôte de virtualisation
+
+[lami@kvm-rocky ~]$ rpm -q qemu-kvm libvirt virt-install
+qemu-kvm-10.1.0-17.el9_8.x86_64
+libvirt-11.10.0-12.el9.x86_64
+virt-install-5.1.0-1.el9.noarch
+
+[lami@kvm-rocky ~]$ systemctl status virtqemud --no-pager
+○ virtqemud.service - libvirt QEMU daemon
+     Loaded: loaded (/usr/lib/systemd/system/virtqemud.service; enabled; preset: enabled)
+     Active: inactive (dead) since Wed 2026-10-28 17:31:59 CET; 1min 23s ago
+   Duration: 3min 4.416s
+TriggeredBy: ● virtqemud-ro.socket
+             ● virtqemud.socket
+             ● virtqemud-admin.socket
+       Docs: man:virtqemud(8)
+             https://libvirt.org/
+    Process: 1111 ExecStart=/usr/sbin/virtqemud $VIRTQEMUD_ARGS (code=exited, status=0/SUCCESS)
+   Main PID: 1111 (code=exited, status=0/SUCCESS)
+        CPU: 39ms
+
+oct. 28 17:28:55 kvm-rocky systemd[1]: Starting libvirt QEMU daemon...
+oct. 28 17:28:55 kvm-rocky systemd[1]: Started libvirt QEMU daemon.
+oct. 28 17:28:55 kvm-rocky virtqemud[1111]: libvirt version: 11.10.0, package: 12.el9 (Rocky Linux Build System <releng@rockylinux.org>, 2026-03-10-23:00:00, )
+oct. 28 17:28:55 kvm-rocky virtqemud[1111]: hostname: kvm-rocky
+oct. 28 17:28:55 kvm-rocky virtqemud[1111]: Impossible d'ouvrir /dev/kvm: Aucun fichier ou dossier de ce type
+oct. 28 17:29:59 kvm-rocky virtqemud[1111]: l'authentification n'est pas disponible : aucun agent polkit disponible pour s'authentifier action 'org.libvirt.unix.manage'
+oct. 28 17:29:59 kvm-rocky virtqemud[1111]: Fin du fichier pendant la lecture des données: Erreur d'entrée/sortie
+oct. 28 17:29:59 kvm-rocky virtqemud[1111]: l'authentification n'est pas disponible : aucun agent polkit disponible pour s'authentifier action 'org.libvirt.unix.manage'
+oct. 28 17:29:59 kvm-rocky virtqemud[1111]: Fin du fichier pendant la lecture des données: Erreur d'entrée/sortie
+oct. 28 17:31:59 kvm-rocky systemd[1]: virtqemud.service: Deactivated successfully.
+
+[lami@kvm-rocky ~]$ lsmod | grep kvm
+
+[lami@kvm-rocky ~]$ grep -cE 'vmx|svm' /proc/cpuinfo
+0
+
+[lami@kvm-rocky ~]$ sudo virt-host-validate qemu
+  QEMU: Checking for hardware virtualization                                 : ÉCHEC (L'hôte n'est pas compatible avec KVM ; les caractéristiques du CPU de virtualisation HW ne sont pas trouvées. Seuls des CPU émulés sont disponibles ; les performances seront considérablement limitées)
+  QEMU: Checking if device '/dev/vhost-net' exists                           : PASS
+
+  QEMU: Checking if device '/dev/net/tun' exists                             : PASS
+
+  QEMU: Checking for cgroup 'cpu' controller support                         : PASS
+
+  QEMU: Checking for cgroup 'cpuacct' controller support                     : PASS
+
+  QEMU: Checking for cgroup 'cpuset' controller support                      : PASS
+
+  QEMU: Checking for cgroup 'memory' controller support                      : PASS
+
+  QEMU: Checking for cgroup 'devices' controller support                     : PASS
+
+  QEMU: Checking for cgroup 'blkio' controller support                       : PASS
+
+  QEMU: Checking for device assignment IOMMU support                         : WARN (Unknown if this platform has IOMMU support)
+  QEMU: Checking for secure guest support                                    : WARN (None of SEV, SEV-ES, SEV-SNP, TDX available)
+
+[lami@kvm-rocky ~]$ virsh -c qemu:///system list --all
+ ID   Nom   État
+------------------
+
+
+[lami@kvm-rocky ~]$ virsh -c qemu:///system net-list --all
+ Nom       État    Démarrage automatique   Persistant
+-------------------------------------------------------
+ default   actif   oui                     oui
+
+
+[lami@kvm-rocky ~]$ systemctl status virtqemud --no-pager -n 0
+● virtqemud.service - libvirt QEMU daemon
+     Loaded: loaded (/usr/lib/systemd/system/virtqemud.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-10-28 17:33:23 CET; 2min 57s ago
+TriggeredBy: ● virtqemud-ro.socket
+             ● virtqemud.socket
+             ● virtqemud-admin.socket
+       Docs: man:virtqemud(8)
+             https://libvirt.org/
+   Main PID: 6123 (virtqemud)
+      Tasks: 20 (limit: 32768)
+     Memory: 57.1M (peak: 83.8M)
+        CPU: 253ms
+     CGroup: /system.slice/virtqemud.service
+             └─6123 /usr/sbin/virtqemud --timeout 120
+
+[lami@kvm-rocky ~]$ systemctl is-enabled virtqemud.socket virtnetworkd.socket
+enabled
+enabled
+
+[lami@kvm-rocky ~]$ ls -l /dev/kvm
+ls: impossible d'accéder à '/dev/kvm': Aucun fichier ou dossier de ce type
+
+[lami@kvm-rocky ~]$ lsmod | grep kvm
+(aucune ligne : le module kvm n est pas charge)
+
+[lami@kvm-rocky ~]$ grep -cE 'vmx|svm' /proc/cpuinfo
+0

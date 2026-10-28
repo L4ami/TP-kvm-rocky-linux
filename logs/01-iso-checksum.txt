@@ -1,0 +1,3 @@
+﻿SHA256 calcule (D:\VM\Rocky-9.8-x86_64-dvd (1).iso) : d2bcbb64c2d67511adf80d40cd9543391a33aea5860a355b1d26d7f55236d01f
+Ligne officielle : SHA256 (Rocky-9.8-x86_64-dvd.iso) = d2bcbb64c2d67511adf80d40cd9543391a33aea5860a355b1d26d7f55236d01f
+Correspond : True

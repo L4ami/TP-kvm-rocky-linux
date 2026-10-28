@@ -1,0 +1,42 @@
+﻿Connecté au domaine 'cirros-test'
+Le caractère d'échappement est ^] (Ctrl + ])
+
+login as 'cirros' user. default password: '<MOT_DE_PASSE_MASQUE>'. use 'sudo' for root.
+cirros login: cirros
+Password: 
+$ cat /etc/os-release | head -3
+PRETTY_NAME="CirrOS 0.6.3"
+NAME="CirrOS"
+VERSION_ID="0.6.3"
+$ uname -a
+Linux cirros 5.15.0-117-generic #127-Ubuntu SMP Fri Jul 5 20:13:28 UTC 2024 x86_64 GNU/Linux
+$ ip -4 addr show eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast qlen 1000
+    inet 192.168.122.105/24 brd 192.168.122.255 scope global dynamic noprefixroute eth0
+       valid_lft 3213sec preferred_lft 2763sec
+$ ip route
+default via 192.168.122.1 dev eth0  src 192.168.122.105  metric 1002 
+192.168.122.0/24 dev eth0 scope link  src 192.168.122.105  metric 1002 
+$ ping -c 3 192.168.122.1
+PING 192.168.122.1 (192.168.122.1) 56(84) bytes of data.
+64 bytes from 192.168.122.1: icmp_seq=1 ttl=64 time=0.377 ms
+64 bytes from 192.168.122.1: icmp_seq=2 ttl=64 time=0.310 ms
+64 bytes from 192.168.122.1: icmp_seq=3 ttl=64 time=0.615 ms
+
+--- 192.168.122.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2024ms
+rtt min/avg/max/mdev = 0.310/0.434/0.615/0.130 ms
+$ ping -c 3 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=127 time=7.68 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=127 time=6.96 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=127 time=6.87 ms
+
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 6.869/7.168/7.675/0.360 ms
+$ exit
+
+login as 'cirros' user. default password: '<MOT_DE_PASSE_MASQUE>'. use 'sudo' for root.
+cirros login: 
+

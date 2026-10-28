@@ -48,3 +48,19 @@ Ce sont les mêmes notions (hyperviseur, VM, réseau virtuel, stockage), avec de
 
 **15. Pourquoi une clé SSH plutôt qu'un mot de passe ?**
 La clé privée ne quitte jamais mon PC et ne peut pas être devinée comme un mot de passe. Le serveur ne garde que la clé publique (comme un cadenas). Et on peut se connecter sans taper de mot de passe.
+
+---
+
+## Questions « à quoi ça sert en entreprise ? »
+
+**16. Pourquoi une entreprise choisirait KVM plutôt qu'ESXi ?**
+KVM est gratuit et open source, intégré à Linux. ESXi demande une licence payante. Depuis le rachat de VMware par Broadcom, les licences sont passées en abonnement vendu par gros lots, et beaucoup d'entreprises ont vu leur facture monter. Elles étudient donc des solutions basées sur KVM, comme Proxmox VE ou OpenStack.
+
+**17. Cite des plateformes connues qui utilisent KVM.**
+Proxmox VE, OpenStack (Nova), Red Hat OpenShift Virtualization, Google Compute Engine. L'hyperviseur Nitro d'AWS est aussi basé sur KVM.
+
+**18. À quoi sert un kickstart en entreprise ?**
+À installer beaucoup de serveurs identiques (10, 100…) automatiquement, sans clic et sans erreur. On le combine souvent avec un démarrage réseau (PXE) ou des outils comme Red Hat Satellite.
+
+**19. Qui utilise `virsh` au quotidien, et pour quoi faire ?**
+L'administrateur système Linux : lister les VM, en démarrer ou en arrêter, ouvrir une console quand une VM ne répond plus, lire son IP, gérer les réseaux virtuels. libvirt est aussi utilisé par OpenStack, oVirt et Cockpit.

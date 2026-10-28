@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<Foundry>
-<VM>
-<VMId type="string">52 80 67 9f b8 84 8e 92-f7 d4 03 a4 a4 f7 0d 2e</VMId>
-<ClientMetaData>
-<clientMetaDataAttributes/>
-<HistoryEventList/></ClientMetaData>
-<vmxPathName type="string">kvm-rocky.vmx</vmxPathName></VM></Foundry>

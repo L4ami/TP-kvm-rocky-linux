@@ -16,3 +16,9 @@ id_*
 
 # Fichiers temporaires
 captures/_*
+
+# Fichiers que VMware cree a cote d un .vmx ouvert
+*.vmsd
+*.vmxf
+*.scoreboard
+*.log.lck

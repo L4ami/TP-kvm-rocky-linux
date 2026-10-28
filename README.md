@@ -204,9 +204,21 @@ Explications :
 
 Résultat : **tout est revenu à la normale** (VBS = 1, Windows Hello = 1, Intégrité de la mémoire = 1, VBS en cours d'exécution = 2, hyperviseur présent = True).
 
-> ⚠️ Deux vérifications demandent un PowerShell **en administrateur** et n'ont pas pu être faites automatiquement : `bcdedit /enum "{current}"` (on attend `hypervisorlaunchtype Auto` et pas de ligne `vsmlaunchtype`) et `Get-BitLockerVolume C:` (champ `ProtectionStatus`). À lancer à la main : clic droit sur le menu Démarrer → **Terminal (administrateur)**.
-
 ![Etat de Windows](captures/03-windows-retour-normal.png)
+
+Deux autres vérifications demandent un PowerShell **en administrateur** (clic droit sur le menu Démarrer → **Terminal (administrateur)**) :
+
+```powershell
+bcdedit /enum "{current}" | findstr /i hypervisor   # options de démarrage de Windows
+Get-BitLockerVolume C: | Select ProtectionStatus    # chiffrement du disque C:
+```
+
+- `bcdedit` lit la configuration de démarrage de Windows ; `| findstr /i hypervisor` ne garde que les lignes qui contiennent « hypervisor ». `hypervisorlaunchtype Auto` veut dire que l'hyperviseur de Windows démarre normalement.
+- `Get-BitLockerVolume` lit l'état de **BitLocker** (le chiffrement du disque). `ProtectionStatus On` = le disque C: est bien protégé.
+
+Résultat : `hypervisorlaunchtype Auto` et BitLocker `On` ✅.
+
+![bcdedit et BitLocker](captures/03b-windows-admin-bcdedit-bitlocker.png)
 
 ---
 

@@ -34,3 +34,7 @@ Get-BitLockerVolume erreur: Accès refusé
 
 === Note ===
 Session non administrateur : bcdedit /enum {current} et Get-BitLockerVolume / manage-bde -status C: refusent l'acces (droits admin requis). Non verifie, a faire par Lami dans un PowerShell administrateur.
+
+=== Verification faite par Lami dans un PowerShell administrateur (18:03) ===
+bcdedit /enum "{current}" | findstr /i hypervisor  ->  hypervisorlaunchtype    Auto
+Get-BitLockerVolume C: | Select ProtectionStatus     ->  On

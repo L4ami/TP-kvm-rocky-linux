@@ -3,7 +3,7 @@ title: TP KVM - Rocky Linux 9.8
 tags: virtualisation, kvm, libvirt, rocky-linux, rhel
 ---
 
-> Dépôt GitHub : https://github.com/L4ami/tp-kvm-rocky-linux (les images s'afficheront une fois le dépôt publié).
+> Dépôt GitHub : https://github.com/L4ami/TP-kvm-rocky-linux (les images s'afficheront une fois le dépôt publié).
 
 # TP – Installer KVM pendant une nouvelle installation de Rocky Linux 9 (clone de RHEL)
 
@@ -29,7 +29,7 @@ tags: virtualisation, kvm, libvirt, rocky-linux, rhel
 12. [Lien avec les TP ESXi et OpenStack](#lien-avec-les-tp-esxi-et-openstack)
 13. [Arborescence du dépôt](#arborescence-du-dépôt)
 14. [Glossaire](#glossaire)
-15. [Fiche de révision pour l'oral](https://github.com/L4ami/tp-kvm-rocky-linux/blob/main/docs/fiche-questions-oral.md)
+15. [Fiche de révision pour l'oral](https://github.com/L4ami/TP-kvm-rocky-linux/blob/main/docs/fiche-questions-oral.md)
 
 > 📸 **Captures d'écran** : toutes les captures sont de vraies captures de fenêtres Windows. Les captures 07 et 08 montrent la fenêtre VMware Workstation. Les autres montrent une fenêtre PowerShell où la commande a été lancée (et, à partir de la 09, connectée en SSH à `kvm-rocky`). Les scripts qui ouvrent la fenêtre, lancent la commande puis la capturent sont dans `config/` (voir l'[arborescence](#arborescence-du-dépôt)).
 
@@ -211,7 +211,7 @@ Explications :
 
 Résultat : **tout est revenu à la normale** (VBS = 1, Windows Hello = 1, Intégrité de la mémoire = 1, VBS en cours d'exécution = 2, hyperviseur présent = True).
 
-![Etat de Windows](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/03-windows-retour-normal.png)
+![Etat de Windows](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/03-windows-retour-normal.png)
 
 Deux autres vérifications demandent un PowerShell **en administrateur** (clic droit sur le menu Démarrer → **Terminal (administrateur)**) :
 
@@ -225,7 +225,7 @@ Get-BitLockerVolume C: | Select ProtectionStatus    # chiffrement du disque C:
 
 Résultat : `hypervisorlaunchtype Auto` et BitLocker `On` ✅.
 
-![bcdedit et BitLocker](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/03b-windows-admin-bcdedit-bitlocker.png)
+![bcdedit et BitLocker](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/03b-windows-admin-bcdedit-bitlocker.png)
 
 ---
 
@@ -252,7 +252,7 @@ Empreinte officielle : https://download.rockylinux.org/pub/rocky/9.8/isos/x86_64
 
 ✅ Identiques : l'ISO est intacte.
 
-![Checksum ISO](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/04-iso-checksum.png)
+![Checksum ISO](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/04-iso-checksum.png)
 
 ---
 
@@ -287,7 +287,7 @@ openssl passwd -6
 
 ### 2.3 Le fichier `ks.cfg`
 
-Version publiable (le hash est masqué) : [`config/ks-publiable.cfg`](https://github.com/L4ami/tp-kvm-rocky-linux/blob/main/config/ks-publiable.cfg)
+Version publiable (le hash est masqué) : [`config/ks-publiable.cfg`](https://github.com/L4ami/TP-kvm-rocky-linux/blob/main/config/ks-publiable.cfg)
 
 ```
 text                      # installation en mode texte (pas d'interface graphique)
@@ -328,11 +328,11 @@ Points à comprendre :
 - `sshkey` : dépose la clé publique dans `/home/lami/.ssh/authorized_keys` ;
 - `--ignoremissing` : si un paquet manque sur le DVD, l'installation continue au lieu de s'arrêter.
 
-![Kickstart](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/05-kickstart-ks-cfg.png)
+![Kickstart](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/05-kickstart-ks-cfg.png)
 
 ### 2.4 Mettre `ks.cfg` dans une ISO « OEMDRV »
 
-Script : [`config/make-oemdrv-iso.ps1`](https://github.com/L4ami/tp-kvm-rocky-linux/blob/main/config/make-oemdrv-iso.ps1). Il utilise **IMAPI2**, le moteur de gravure intégré à Windows :
+Script : [`config/make-oemdrv-iso.ps1`](https://github.com/L4ami/TP-kvm-rocky-linux/blob/main/config/make-oemdrv-iso.ps1). Il utilise **IMAPI2**, le moteur de gravure intégré à Windows :
 - `IMAPI2FS.MsftFileSystemImage` crée une image de CD vide ;
 - `VolumeName = "OEMDRV"` donne au CD le nom magique qu'Anaconda recherche ;
 - `Root.AddTree(...)` ajoute le contenu du dossier ;
@@ -357,7 +357,7 @@ Résultat : `D:\VMs\kvm-rocky\oemdrv.iso`, 52 Ko.
 
 ### 3.2 Le fichier de configuration `.vmx`
 
-Le `.vmx` est la « fiche technique » de la VM. Copie : [`config/kvm-rocky.vmx`](https://github.com/L4ami/tp-kvm-rocky-linux/blob/main/config/kvm-rocky.vmx). Lignes importantes :
+Le `.vmx` est la « fiche technique » de la VM. Copie : [`config/kvm-rocky.vmx`](https://github.com/L4ami/TP-kvm-rocky-linux/blob/main/config/kvm-rocky.vmx). Lignes importantes :
 
 | Ligne | Signification |
 |---|---|
@@ -371,7 +371,7 @@ Le `.vmx` est la « fiche technique » de la VM. Copie : [`config/kvm-rocky.vmx`
 | `ethernet0.connectionType = "nat"` | réseau NAT (VMnet8) |
 | `ethernet0.virtualDev = "vmxnet3"` | carte réseau virtuelle performante de VMware |
 
-![Parametres VM](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/06-vm-vmware-parametres.png)
+![Parametres VM](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/06-vm-vmware-parametres.png)
 
 ### 3.3 Démarrer la VM
 
@@ -385,11 +385,11 @@ Le `.vmx` est la « fiche technique » de la VM. Copie : [`config/kvm-rocky.vmx`
 
 Le menu GRUB s'affiche et démarre tout seul après 60 secondes sur **« Test this media & install Rocky Linux 9.8 »**. Ce choix vérifie d'abord le DVD (environ 5 minutes), puis Anaconda trouve l'ISO `OEMDRV` et installe **sans aucune question**. 832 paquets ont été installés.
 
-![Installation Anaconda](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/07-installation-anaconda.png)
+![Installation Anaconda](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/07-installation-anaconda.png)
 
 Après le redémarrage automatique, l'écran de connexion apparaît :
 
-![Installation terminee](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/08-installation-terminee.png)
+![Installation terminee](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/08-installation-terminee.png)
 
 ⏱️ Durée totale : environ **12 minutes** (de 17:17 à 17:29).
 
@@ -412,7 +412,7 @@ ssh -i $env:USERPROFILE\.ssh\kvm_rocky_key lami@192.168.190.145
 
 Aucun mot de passe n'est demandé : la clé SSH fonctionne.
 
-![SSH depuis Windows](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/09-ssh-depuis-windows.png)
+![SSH depuis Windows](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/09-ssh-depuis-windows.png)
 
 ### 4.2 Version et environnement installé
 
@@ -423,7 +423,7 @@ dnf group list --installed      # quels groupes / environnements sont installés
 
 Résultat : `Rocky Linux release 9.8 (Blue Onyx)` et l'environnement **« Hôte de virtualisation »**. ✅ KVM a bien été installé **pendant** l'installation.
 
-![Version et groupes](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/10-rocky-version-groupes.png)
+![Version et groupes](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/10-rocky-version-groupes.png)
 
 ### 4.3 Les paquets KVM
 
@@ -443,7 +443,7 @@ open-vm-tools-13.0.10-1.el9.x86_64
 
 Les 5 paquets demandés dans le kickstart sont bien là.
 
-![Paquets](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/11-paquets-kvm-libvirt.png)
+![Paquets](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/11-paquets-kvm-libvirt.png)
 
 ### 4.4 Le service libvirt et l'accélération matérielle
 
@@ -462,7 +462,7 @@ grep -cE 'vmx|svm' /proc/cpuinfo
 
 ➡️ C'est la preuve que la VM n'a pas de VT-x : on est en **émulation QEMU**, comme prévu (théorie 2.4).
 
-![Service libvirt](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/12-libvirt-service.png)
+![Service libvirt](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/12-libvirt-service.png)
 
 ### 4.5 `virt-host-validate`
 
@@ -480,7 +480,7 @@ Cet outil fait un **bilan de santé** de l'hôte de virtualisation :
 | IOMMU | WARN | pas de passage direct de matériel (inutile ici) |
 | secure guest (SEV/TDX) | WARN | pas de chiffrement mémoire des VM (inutile ici) |
 
-![virt-host-validate](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/13-virt-host-validate.png)
+![virt-host-validate](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/13-virt-host-validate.png)
 
 ### 4.6 libvirt répond et le réseau `default` existe
 
@@ -493,7 +493,7 @@ virsh -c qemu:///system net-list --all
 - `list --all` : toutes les VM, même éteintes (aucune pour l'instant) ;
 - `net-list --all` : les réseaux virtuels. Le réseau **`default`** est **actif** et démarre **automatiquement**. C'est un réseau NAT `192.168.122.0/24` avec un serveur DHCP.
 
-![virsh reseau default](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/14-virsh-reseau-default.png)
+![virsh reseau default](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/14-virsh-reseau-default.png)
 
 ---
 
@@ -556,7 +556,7 @@ virt-install \
 
 > ℹ️ Le message `WARNING **: Entity http://pcisig.com/pci/1af4/1012 referenced but not defined` vient de la base `osinfo` : elle cite un identifiant de périphérique virtio qu'elle ne décrit pas elle-même. Il est **sans conséquence** ; la ligne « Création de domaine terminée » confirme que la VM est créée.
 
-![virt-install](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/15-cirros-virt-install.png)
+![virt-install](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/15-cirros-virt-install.png)
 
 ### 5.4 La VM tourne
 
@@ -569,7 +569,7 @@ virsh dominfo cirros-test
 
 > 🛡️ **sVirt** : SELinux enferme chaque VM dans sa propre « bulle » (les nombres `c751,c1001` sont uniques à cette VM). Une VM piratée ne peut pas lire les disques des autres.
 
-![virsh list running](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/16-virsh-list-running.png)
+![virsh list running](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/16-virsh-list-running.png)
 
 ### 5.5 Son adresse IP et un ping depuis Rocky
 
@@ -587,7 +587,7 @@ IP de CirrOS : **192.168.122.168** ; ping : **4 envoyés, 4 reçus, 0 % de perte
 
 > ℹ️ `net-dhcp-leases` montre aussi une ancienne adresse (192.168.122.105) : c'est le bail DHCP de la première VM CirrOS, supprimée puis recréée pour la capture 15. Le bail reste noté jusqu'à son expiration, ce n'est pas une erreur.
 
-![IP et ping](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/17-cirros-ip-ping.png)
+![IP et ping](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/17-cirros-ip-ping.png)
 
 ### 5.6 Connexion à la console de CirrOS
 
@@ -609,7 +609,7 @@ ping -c 2 8.8.8.8               # Internet répond (double NAT : libvirt puis VM
 
 ✅ La VM imbriquée a un réseau qui fonctionne jusqu'à Internet.
 
-![Console CirrOS](https://raw.githubusercontent.com/L4ami/tp-kvm-rocky-linux/main/captures/18-cirros-console.png)
+![Console CirrOS](https://raw.githubusercontent.com/L4ami/TP-kvm-rocky-linux/main/captures/18-cirros-console.png)
 
 > ⏱️ En émulation, CirrOS a mis environ **4 minutes** à démarrer complètement (elle cherche d'abord un serveur de métadonnées « cloud » qui n'existe pas ici). Avec KVM accéléré, cela prendrait quelques secondes.
 

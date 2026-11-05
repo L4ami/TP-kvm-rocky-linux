@@ -150,4 +150,4 @@ Aucune capture ne montre de mot de passe. Le mot de passe par défaut de CirrOS 
 
 ---
 
-**Auteur :** Lami ([@L4ami](https://github.com/L4ami)) · Octobre 2026
+**Auteur :** Paul Giocanti ([@L4ami](https://github.com/L4ami)) · Octobre 2026

@@ -8,8 +8,8 @@
 
 > **En une phrase :** j'ai installé un serveur **Rocky Linux 9.8** (le clone gratuit de Red Hat) et, **pendant l'installation**, je l'ai transformé en **hyperviseur KVM**. Ensuite, j'y ai fait tourner une petite machine virtuelle (**CirrOS**) qui a accès à Internet.
 
-Ce dépôt est écrit pour être compris **même sans rien connaître** à KVM. Tous les mots techniques sont expliqués.
-👉 **Le cours complet**, étape par étape, pour **tout refaire de zéro** : [`docs/compte-rendu.md`](docs/compte-rendu.md)
+Ce dépôt est écrit pour être compris **même sans rien connaître** à KVM. Tous les mots techniques sont expliqués.<br>
+👉 **Le cours complet**, étape par étape, pour **tout refaire de zéro** : [`docs/compte-rendu.md`](docs/compte-rendu.md)<br>
 👉 **Réviser pour l'oral** : [`docs/fiche-questions-oral.md`](docs/fiche-questions-oral.md)
 
 > Projet réalisé pendant la semaine de formation **Virtualisation** (TP 3), après les TP **VMware ESXi** et **OpenStack**.
